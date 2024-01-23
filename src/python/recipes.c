@@ -41,7 +41,7 @@
  * @brief      A wrapper function that carries out numerical integration on a supplied function between limits
  *
  *
- * @param [in] func - a function to integrate, needs to be of the form (double (double,void*))
+ * @param [in] func - a function to integrate_default, needs to be of the form (double (double,void*))
  * @param [in] a - lower bound
  * @param [in] b - upper bound
  * @param [in] eps - the relative accuracy desired.

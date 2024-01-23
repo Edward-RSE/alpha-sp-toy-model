@@ -18,7 +18,6 @@ add_executable(num-int
         src/python/synonyms.c
         src/python/xlog.c
         src/main.c
-        src/sigma_phot.c
         src/alpha_sp.c
         include/integrate.h
         src/integrate.c

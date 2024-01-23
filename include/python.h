@@ -1342,7 +1342,7 @@ extern PhotPtr photmain;               /**< A pointer to all of the photons that
 
 
 #define SPECTYPE_RAW        0   /**< As written this produces L_nu and so to get a Luminosity
-                                  * one needs to integrate
+                                  * one needs to integrate_default
                                   */
 #define SPECTYPE_FLAMBDA    1
 #define SPECTYPE_FNU        2
