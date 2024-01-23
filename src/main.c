@@ -2,17 +2,13 @@
 // Created by Edward Parkinson on 22/01/2024.
 //
 
-#include <math.h>
+#include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
-
 #include <gsl/gsl_errno.h>
-#include <gsl/gsl_integration.h>
 
 #include "atomic.h"
 #include "python.h"
-
 
 //
 // Main function of the program
@@ -33,7 +29,7 @@ int main(int argc, char **argv) {
 
     for (int j = 0; j < nlevels_macro; ++j) {
       for (int k = 0; k < xconfig[j].n_bfd_jump; ++k) {
-        const double recomb_sp = get_recomb_sp(&phot_top[xconfig[j].bfd_jump[k]], temperature);
+        const double recomb_sp = alpha_sp(&phot_top[xconfig[j].bfd_jump[k]], temperature, 0);
         Log("j %d: k=%d %g\n", j, k, recomb_sp);
       }
     }

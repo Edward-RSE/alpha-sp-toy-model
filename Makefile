@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -I./include
+CFLAGS = -Wall -I./include -Wno-deprecated-non-prototype
 
 SRC_DIR = src
 LIB_DIR = lib
