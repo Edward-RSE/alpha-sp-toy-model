@@ -143,25 +143,19 @@ double integrate_qags_small(double (*integrand)(double, void *), void *params, d
 //
 double integrate_trap(double (*integrand)(double, void *), void *params, double lower_bound, double upper_bound,
                       double rel_tol) {
-  const int max_iterations = 100;
-  double result = 0.0;
-  double prev_result = 0.0;
+  (void) rel_tol;
+  const int n = 500;
 
-  for (int n = 1; n <= max_iterations; ++n) {
-    double h = (upper_bound - lower_bound) / n;
-    double sum = 0.5 * (integrand(lower_bound, params) + integrand(upper_bound, params));
+  double h = (upper_bound - lower_bound) / n;
+  double result = 0.5 * (integrand(lower_bound, params) + integrand(upper_bound, params));
 
-    for (int i = 1; i < n; ++i) {
-      double x = lower_bound + i * h;
-      sum += integrand(x, params);
-    }
-
-    result = h * sum;
-
-    if (n > 1 && fabs((result - prev_result) / result) < rel_tol) { break; }
-
-    prev_result = result;
+  for (int i = 1; i < n; ++i) {
+    double x = lower_bound + i * h;
+    result += integrand(x, params);
   }
+
+  result *= h;
+
 
   return result;
 }
