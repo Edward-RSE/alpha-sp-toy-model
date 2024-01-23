@@ -54,31 +54,31 @@
 #endif
 
 #ifndef M_PI
-#define M_PI       3.14159265358979323846264338328      /* pi */
+#define M_PI       3.14159265358979323846264338328      /* phot */
 #endif
 
 #ifndef M_PI_2
-#define M_PI_2     1.57079632679489661923132169164      /* pi/2 */
+#define M_PI_2     1.57079632679489661923132169164      /* phot/2 */
 #endif
 
 #ifndef M_PI_4
-#define M_PI_4     0.78539816339744830961566084582     /* pi/4 */
+#define M_PI_4     0.78539816339744830961566084582     /* phot/4 */
 #endif
 
 #ifndef M_SQRTPI
-#define M_SQRTPI   1.77245385090551602729816748334      /* sqrt(pi) */
+#define M_SQRTPI   1.77245385090551602729816748334      /* sqrt(phot) */
 #endif
 
 #ifndef M_2_SQRTPI
-#define M_2_SQRTPI 1.12837916709551257389615890312      /* 2/sqrt(pi) */
+#define M_2_SQRTPI 1.12837916709551257389615890312      /* 2/sqrt(phot) */
 #endif
 
 #ifndef M_1_PI
-#define M_1_PI     0.31830988618379067153776752675      /* 1/pi */
+#define M_1_PI     0.31830988618379067153776752675      /* 1/phot */
 #endif
 
 #ifndef M_2_PI
-#define M_2_PI     0.63661977236758134307553505349      /* 2/pi */
+#define M_2_PI     0.63661977236758134307553505349      /* 2/phot */
 #endif
 
 #ifndef M_LN10
@@ -90,7 +90,7 @@
 #endif
 
 #ifndef M_LNPI
-#define M_LNPI     1.14472988584940017414342735135      /* ln(pi) */
+#define M_LNPI     1.14472988584940017414342735135      /* ln(phot) */
 #endif
 
 #ifndef M_EULER

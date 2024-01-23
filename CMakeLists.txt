@@ -19,6 +19,9 @@ add_executable(num-int
         src/python/xlog.c
         src/main.c
         src/sigma_phot.c
+        src/alpha_sp.c
+        include/integrate.h
+        src/integrate.c
 )
 
 target_link_libraries(num-int m gsl)
