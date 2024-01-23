@@ -1,0 +1,3 @@
+#define VERSION  "87x"
+#define GIT_COMMIT_HASH "36712483525e5ef122ea7f76039cc7b559bfcd49"
+#define GIT_DIFF_STATUS 3 
