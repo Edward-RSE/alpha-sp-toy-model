@@ -40,17 +40,21 @@ void print_integrate_divider(void) {
 }
 
 //
-// Compute the average error in an array
+// Print the results for a benchmark run
 //
-double average_error(const double *expected, const double *actual, int size) {
+void print_results(const char *name, const double time, const double *expected, const double *actual, int size) {
   double sum_errors = 0.0;
 
-  for (int i = 0; i < size; ++i) {
-    double error = (expected[i] != 0.0) ? fabs((actual[i] - expected[i]) / expected[i]) : 0.0;
-    sum_errors += error;
+  if (actual != NULL) {
+    for (int i = 0; i < size; ++i) {
+      const double error = (expected[i] != 0.0) ? fabs((actual[i] - expected[i]) / expected[i]) : 0.0;
+      sum_errors += error;
+    }
+    const double average_error = sum_errors / size;
+    printf("%-12s : %-12.6f seconds : average fractional error %5e\n", name, time, average_error);
+  } else {
+    printf("%-12s : %-12.6f seconds\n", name, time);
   }
-
-  return sum_errors / size;
 }
 
 //
@@ -139,6 +143,19 @@ double time_integrator(double (*integrator)(double (*integrand)(double, void *),
 }
 
 //
+// Small macro for running the benchmark and printing results
+//
+#define TIME_IT(name, integrator)                                                                                      \
+  do {                                                                                                                 \
+    int count;                                                                                                         \
+    double *results;                                                                                                   \
+    const double time = time_integrator(integrator, &results, &count);                                                 \
+    print_results(name, time, results_default, results, count);                                                        \
+    free(results);                                                                                                     \
+  } while (0);
+
+
+//
 // Main function of the program
 //
 int main(int argc, char **argv) {
@@ -152,41 +169,15 @@ int main(int argc, char **argv) {
   print_integrate_divider();
   gsl_set_error_handler_off();
 
-  int results_count;
   double *results_default;
-  double *results_cquad;
-  double *results_qag;
-  double *results_qags;
-  double *results_romberg;
-  double *results_trap;
+  double time_default = time_integrator(integrate_default, &results_default, NULL);
+  print_results("Default", time_default, results_default, NULL, 0);
 
-  const double time_default = time_integrator(integrate_default, &results_default, &results_count);
-  printf("Default integrator    : %f seconds\n", time_default);
-
-  const double time_trap = time_integrator(integrate_trap, &results_trap, NULL);
-  printf("Trapezium integrator  : %f seconds : average fractional error %g\n", time_trap,
-         average_error(results_default, results_trap, results_count));
-
-  const double time_cquad = time_integrator(integrate_cquad, &results_cquad, NULL);
-  printf("CQUAD integrator      : %f seconds : average fractional error %g\n", time_cquad,
-         average_error(results_default, results_cquad, results_count));
-
-  const double time_qag = time_integrator(integrate_qag, &results_qag, NULL);
-  printf("QAG integrator        : %f seconds : average fractional error %g\n", time_qag,
-         average_error(results_default, results_qag, results_count));
-
-  const double time_qags = time_integrator(integrate_qags_small, &results_qags, NULL);
-  printf("Small QAGS integrator : %f seconds : average fractional error %g\n", time_qags,
-         average_error(results_default, results_qags, results_count));
-
-  const double time_romberg = time_integrator(integrate_romberg, &results_romberg, NULL);
-  printf("Romberg integrator    : %f seconds : average fractional error %g\n", time_romberg,
-         average_error(results_default, results_romberg, results_count));
-
-  free(results_default);
-  free(results_cquad);
-  free(results_qag);
-  free(results_romberg);
+  TIME_IT("Trapezium", integrate_trap)
+  TIME_IT("CQUAD", integrate_cquad)
+  TIME_IT("QAG", integrate_qag)
+  TIME_IT("Smaller QAGS", integrate_qags_small)
+  TIME_IT("Romberg", integrate_romberg)
 
   return EXIT_SUCCESS;
 }
