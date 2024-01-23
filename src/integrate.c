@@ -144,7 +144,7 @@ double integrate_qags_small(double (*integrand)(double, void *), void *params, d
 double integrate_trap(double (*integrand)(double, void *), void *params, double lower_bound, double upper_bound,
                       double rel_tol) {
   (void) rel_tol;
-  const int n = 500;
+  const int n = 750;
 
   double h = (upper_bound - lower_bound) / n;
   double result = 0.5 * (integrand(lower_bound, params) + integrand(upper_bound, params));
