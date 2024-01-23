@@ -153,16 +153,40 @@ int main(int argc, char **argv) {
   gsl_set_error_handler_off();
 
   int results_count;
-  double *results_default, *results_new;
+  double *results_default;
+  double *results_cquad;
+  double *results_qag;
+  double *results_qags;
+  double *results_romberg;
+  double *results_trap;
 
   const double time_default = time_integrator(integrate_default, &results_default, &results_count);
-  printf("Default integrator : %f seconds\n", time_default);
-  const double time_new = time_integrator(integrate_romberg, &results_new, NULL);
-  printf("Romberg integrator : %f seconds : average fractional error %g\n", time_new,
-         average_error(results_default, results_new, results_count));
+  printf("Default integrator    : %f seconds\n", time_default);
+
+  const double time_trap = time_integrator(integrate_trap, &results_trap, NULL);
+  printf("Trapezium integrator  : %f seconds : average fractional error %g\n", time_trap,
+         average_error(results_default, results_trap, results_count));
+
+  const double time_cquad = time_integrator(integrate_cquad, &results_cquad, NULL);
+  printf("CQUAD integrator      : %f seconds : average fractional error %g\n", time_cquad,
+         average_error(results_default, results_cquad, results_count));
+
+  const double time_qag = time_integrator(integrate_qag, &results_qag, NULL);
+  printf("QAG integrator        : %f seconds : average fractional error %g\n", time_qag,
+         average_error(results_default, results_qag, results_count));
+
+  const double time_qags = time_integrator(integrate_qags_small, &results_qags, NULL);
+  printf("Small QAGS integrator : %f seconds : average fractional error %g\n", time_qags,
+         average_error(results_default, results_qags, results_count));
+
+  const double time_romberg = time_integrator(integrate_romberg, &results_romberg, NULL);
+  printf("Romberg integrator    : %f seconds : average fractional error %g\n", time_romberg,
+         average_error(results_default, results_romberg, results_count));
 
   free(results_default);
-  free(results_new);
+  free(results_cquad);
+  free(results_qag);
+  free(results_romberg);
 
   return EXIT_SUCCESS;
 }

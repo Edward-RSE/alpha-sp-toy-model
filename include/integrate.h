@@ -8,6 +8,14 @@
 double integrate_default(double (*integrand)(double, void *), void *params, double lower_bound, double upper_bound,
                          double rel_tol);
 double integrate_romberg(double (*integrand)(double, void *), void *params, double lower_bound, double upper_bound,
+                         double rel_tol);
+double integrate_cquad(double (*integrand)(double, void *), void *params, double lower_bound, double upper_bound,
+                       double rel_tol);
+double integrate_qag(double (*integrand)(double, void *), void *params, double lower_bound, double upper_bound,
                      double rel_tol);
+double integrate_qags_small(double (*integrand)(double, void *), void *params, double lower_bound, double upper_bound,
+                            double rel_tol);
+double integrate_trap(double (*integrand)(double, void *), void *params, double lower_bound, double upper_bound,
+                      double rel_tol);
 
 #endif//NUM_INT_INTEGRATE_H
