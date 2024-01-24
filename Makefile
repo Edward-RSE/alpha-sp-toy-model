@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -I./include -Wno-deprecated-non-prototype
+CFLAGS = -Wall -I./include -Wno-deprecated-non-prototype -O3
 
 SRC_DIR = src
 LIB_DIR = lib
@@ -20,7 +20,7 @@ EXECUTABLE = $(BIN_DIR)/num-int
 LIBS = -L./lib/ -lm -lgsl
 
 # Default target, build the executable
-all: $(BIN_DIR) $(BUILD_DIR) $(EXECUTABLE)
+all: $(BIN_DIR) $(BUILD_DIR) $(BUILD_DIR)/python $(EXECUTABLE)
 
 # Rule to build the executable
 $(EXECUTABLE): $(OBJ)
