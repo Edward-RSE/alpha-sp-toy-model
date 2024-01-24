@@ -17,5 +17,7 @@ double integrate_qags_small(double (*integrand)(double, void *), void *params, d
                             double rel_tol);
 double integrate_trap(double (*integrand)(double, void *), void *params, double lower_bound, double upper_bound,
                       double rel_tol);
+double integrate_simp(double (*integrand)(double, void *), void *params, double lower_bound, double upper_bound,
+                      double rel_tol);
 
 #endif//NUM_INT_INTEGRATE_H

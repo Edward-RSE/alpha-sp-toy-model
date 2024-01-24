@@ -159,3 +159,37 @@ double integrate_trap(double (*integrand)(double, void *), void *params, double 
 
   return result;
 }
+
+
+//
+// Perform numerical integration on a given function which takes in a double
+// and a void * of parameters.
+//
+// This performs Simpson's rule.
+//
+double integrate_simp(double (*integrand)(double, void *), void *params, double lower_bound, double upper_bound,
+                      double rel_tol) {
+  (void)rel_tol;
+  double result;
+  const int n = 700;
+
+  if(n % 2 != 0) {
+    fprintf(stderr, "Number of subintervals must be even");
+    return 0;
+  }
+
+  const double h = (upper_bound - lower_bound) / n;
+  double integral = integrand(lower_bound, params) + integrand(upper_bound, params);
+
+  for (int i = 1; i < n; i += 2) {
+    integral += 4 * integrand(lower_bound + i * h, params);
+  }
+
+  for (int i = 2; i < n - 1; i += 2) {
+      integral += 2 * integrand(lower_bound + i * h, params);
+  }
+
+  result = integral * h / 3.0;
+
+  return result;
+}

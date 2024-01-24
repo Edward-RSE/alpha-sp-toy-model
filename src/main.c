@@ -174,6 +174,7 @@ int main(int argc, char **argv) {
   print_results("Default", time_default, results_default, NULL, 0);
 
   TIME_IT("Trapezium", integrate_trap)
+  TIME_IT("Simpson's", integrate_simp)
   TIME_IT("CQUAD", integrate_cquad)
   TIME_IT("QAG", integrate_qag)
   TIME_IT("Smaller QAGS", integrate_qags_small)
