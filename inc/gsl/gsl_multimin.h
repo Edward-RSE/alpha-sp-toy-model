@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-/* Modified by Tuomo Keskitalo to include fminimizer and 
+/* Modified by Tuomo Keskitalo to inc fminimizer and
    Nelder Mead related lines */
 
 #ifndef __GSL_MULTIMIN_H__

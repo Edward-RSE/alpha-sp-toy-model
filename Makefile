@@ -1,56 +1,47 @@
-CC = gcc
-CFLAGS = -Wall -I./include -Wno-deprecated-non-prototype -O3
+CC = mpicc
+CFLAGS = -Wall -O3 -Wno-deprecated-non-prototype -std=gnu99
 
-SRC_DIR = src
-LIB_DIR = lib
-BUILD_DIR = build
-BIN_DIR = bin
+# List of directories
+SOURCE_DIR = ./src
+LIB_DIR = ./lib
+INCLUDE_DIR = ./inc
+OBJ_DIR = ./obj
+BIN_DIR = ./bin
 
 # List of source files
-SRC = $(wildcard $(SRC_DIR)/*.c) $(wildcard $(SRC_DIR)/python/*.c)
-LIB_SRC = $(wildcard $(LIB_DIR)/*.c)
+PYTHON_SOURCE = $(wildcard $(SOURCE_DIR)/python/*.c)
+NUM_INT_SOURCE = $(wildcard $(SOURCE_DIR)/num-int/*.c)
+NODE_SHARE_SOURCE = $(wildcard $(SOURCE_DIR)/node-share/*.c)
 
-# List of object files derived from source files
-OBJ = $(patsubst $(SRC_DIR)/%.c,$(BUILD_DIR)/%.o,$(SRC)) $(patsubst $(LIB_DIR)/%.c,$(BUILD_DIR)/%.o,$(LIB_SRC))
+# List of object files
+PYTHON_OBJECTS = $(patsubst $(SOURCE_DIR)/%.c,$(OBJ_DIR)/%.o,$(PYTHON_SOURCE))
+NUM_INT_OBJECTS = $(patsubst $(SOURCE_DIR)/%.c,$(OBJ_DIR)/%.o,$(NUM_INT_SOURCE))
+NODE_SHARE_OBJECTS = $(patsubst $(SOURCE_DIR)/%.c,$(OBJ_DIR)/%.o,$(NODE_SHARE_SOURCE))
 
-# Final executable target
-EXECUTABLE = $(BIN_DIR)/num-int
+NUM_INT_EXE = $(BIN_DIR)/num-int
+NODE_SHARE_EXE = $(BIN_DIR)/node-share
+LIBS = -L$(LIB_DIR) -lm -lgsl
 
-# Libraries to link against
-LIBS = -L./lib/ -lm -lgsl
+all: directories $(NUM_INT_EXE) $(NODE_SHARE_EXE)
 
-# Default target, build the executable
-all: $(BIN_DIR) $(BUILD_DIR) $(BUILD_DIR)/python $(EXECUTABLE)
+# Rule to create objects
+$(OBJ_DIR)/%.o: $(SOURCE_DIR)/%.c
+	@mkdir -p $(@D)  # Ensure the output directory exists
+	$(CC) $(CFLAGS) -I$(INCLUDE_DIR) -c $< -o $@
 
-# Rule to build the executable
-$(EXECUTABLE): $(OBJ)
-	$(CC) $(OBJ) -o $@ $(LIBS)
+# Rule to create num-int executable
+$(NUM_INT_EXE): $(NUM_INT_OBJECTS) $(PYTHON_OBJECTS)
+	$(CC) $(NUM_INT_OBJECTS) $(PYTHON_OBJECTS) -o $@ $(LIBS)
 
-# Rule to build object files from source files
-$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c $(wildcard $(SRC_DIR)/*.h)
-	$(CC) $(CFLAGS) -c $< -o $@
+# Rule to create node-share executable
+$(NODE_SHARE_EXE): $(NODE_SHARE_OBJECTS) $(PYTHON_OBJECTS)
+	$(CC) $(NODE_SHARE_OBJECTS) $(PYTHON_OBJECTS) -o $@ $(LIBS)
 
-$(BUILD_DIR)/%.o: $(SRC_DIR)/python/%.c $(wildcard $(SRC_DIR)/python/*.h) | $(BUILD_DIR)/python
-	$(CC) $(CFLAGS) -c $< -o $@
+# Rule to create directories
+directories:
+	mkdir -p $(OBJ_DIR) $(BIN_DIR)
 
-$(BUILD_DIR)/%.o: $(LIB_DIR)/%.c $(wildcard $(LIB_DIR)/*.h)
-	$(CC) $(CFLAGS) -c $< -o $@
-
-# Rule to create build directory
-$(BUILD_DIR):
-	mkdir -p $@
-
-# Rule to create build/python directory
-$(BUILD_DIR)/python:
-	mkdir -p $@
-
-# Rule to create bin directory
-$(BIN_DIR):
-	mkdir -p $@
-
-# Rule to clean up generated files
 clean:
-	rm -rf $(BUILD_DIR)/*.o $(BUILD_DIR)/python/*.o $(EXECUTABLE)
+	rm -rf $(OBJ_DIR) $(BIN_DIR)
 
-# Marking non-file targets as phony
-.PHONY: all clean
+.PHONY: all clean directories

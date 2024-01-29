@@ -2,7 +2,7 @@
 // Created by Edward Parkinson on 22/01/2024.
 //
 
-#include <gsl/gsl_errno.h>
+#include "gsl/gsl_errno.h"
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>

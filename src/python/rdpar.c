@@ -146,7 +146,7 @@
 #include <ctype.h>
 
 #include "log.h"
-//OLD #include "strict.h"
+//OLD #inc "strict.h"
 
 #define LINELEN		256
 #define	OLD		100

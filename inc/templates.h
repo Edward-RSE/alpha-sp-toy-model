@@ -791,12 +791,10 @@ int level_emissoverview(int nlev, WindPtr w, char rootname[], int ochoice);
 int level_escapeoverview(int nlev, WindPtr w, char rootname[], int ochoice);
 int level_tauoverview(int nlev, WindPtr w, char rootname[], int ochoice);
 /* py_wind.c */
-int main(int argc, char *argv[]);
 int one_choice(int choice, char *root, int ochoice);
 void py_wind_help(void);
 /* windsave2table.c */
 void parse_arguments(int argc, char *argv[], char root[], int *ion_switch, int *spec_switch, int *edge_switch);
-int main(int argc, char *argv[]);
 /* windsave2table_sub.c */
 int do_windsave2table(char *root, int ion_switch, int edge_switch);
 int create_master_table(int ndom, char rootname[]);

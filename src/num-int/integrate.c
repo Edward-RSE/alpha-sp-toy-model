@@ -4,8 +4,8 @@
 
 #include <stdio.h>
 
-#include <gsl/gsl_errno.h>
-#include <gsl/gsl_integration.h>
+#include "gsl/gsl_errno.h"
+#include "gsl/gsl_integration.h"
 
 //
 // Perform numerical integration on a given function which takes in a double and

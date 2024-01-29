@@ -1,5 +1,5 @@
 #ifdef MPI_ON
-#include "mpi.h"
+#inc "mpi.h"
 #endif
 
 
@@ -1796,7 +1796,7 @@ extern struct Import *imported_model;   // MAX_DOM is defined in python.h and as
 
 /* We're going to keep the matrix GPU functions seperate from the other templates */
 #ifdef CUDA_ON
-#include "matrix_gpu.h"
+#inc "matrix_gpu.h"
 #endif
 
 #define START_PROFILE_MSG(msg) \
